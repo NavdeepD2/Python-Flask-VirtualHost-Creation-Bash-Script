@@ -1,0 +1,21 @@
+<VirtualHost *:80>
+    ServerName domainname
+    ServerAlias www.domainanme
+    DocumentRoot /var/www/domainname/public_html
+    ProxyPass / http://127.0.0.1:pythonport/
+    ProxyPassReverse / http://127.0.0.1:pythonport/
+    <Directory /var/www/domainname/public_html>
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+    ErrorLog /var/log/httpd/domainname-error.log
+    CustomLog /var/log/httpd/domainname-access.log combined
+    <IfModule mod_dir.c>
+        DirectoryIndex index.php index.pl index.cgi index.html index.xhtml index.htm
+    </IfModule>
+RewriteEngine on
+RewriteCond %{SERVER_NAME} =www.domainname [OR]
+RewriteCond %{SERVER_NAME} =domainname
+RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,NE,R=permanent]
+</VirtualHost>
