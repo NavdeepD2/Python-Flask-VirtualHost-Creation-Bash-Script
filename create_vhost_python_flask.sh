@@ -24,8 +24,8 @@ if [[ $confirmation != "Y" && $confirmation != "y" ]]; then
     exit 0
 fi
 
-# Copy sample_vhost_conf to domainname.conf and replace placeholders
-cp /etc/sample_vhost_conf "/etc/httpd/conf.d/$domainname.conf"
+# Copy vhost_template_conf to domainname.conf and replace placeholders
+cp vhost_template_conf "/etc/httpd/conf.d/$domainname.conf"
 sed -i "s/domainname/$domainname/g; s/pythonport/$pythonport/g" "/etc/httpd/conf.d/$domainname.conf"
 
 # Create directory for public_html
